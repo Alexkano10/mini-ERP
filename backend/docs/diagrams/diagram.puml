@@ -1,0 +1,86 @@
+@startuml
+
+class Person {
+    <<abstract>>
+    - Long id
+    - String firstName
+    - String lastName
+    - String idNumber
+    - String phone
+    - String email
+    - String address
+    + getId()
+    + getFirstName()
+    + getLastName()
+}
+
+class Employee {
+    - String position
+    - Double salary
+    - Date hireDate
+    - Boolean active
+    + getPosition()
+    + getSalary()
+}
+
+class Company {
+    - Long id
+    - String businessName
+    - String tradeName
+    - String taxId
+    - String fiscalAddress
+    - String phone
+    - String email
+    - Boolean active
+    - List<Contact> contacts
+    - List<ProvidedService> providedServices
+    + getId()
+    + getBusinessName()
+    + getContacts()
+}
+
+class Contact {
+    - Long id
+    - String firstName
+    - String lastName
+    - String position
+    - String phone
+    - String email
+    + getId()
+    + getName()
+}
+
+class ServiceDetail {
+    - Long id
+    - String name
+    - String description
+    - Double basePrice
+    - Boolean active
+    + getId()
+    + getName()
+    + getBasePrice()
+}
+
+class ProvidedService {
+    - Long id
+    - Company company
+    - ServiceDetail serviceDetail
+    - Employee employee
+    - Contact mainContact
+    - Date startDate
+    - Date endDate
+    - Double finalPrice
+    - String status
+    + getId()
+    + getCompany()
+    + getServiceDetail()
+}
+
+Person <|-- Employee : extends
+Company "1" -- "*" Contact : has
+Company "1" -- "*" ProvidedService : contracts
+ServiceDetail "1" -- "*" ProvidedService : associated
+Employee "1" -- "*" ProvidedService : performs
+Contact "1" -- "*" ProvidedService : responsible
+
+@enduml
